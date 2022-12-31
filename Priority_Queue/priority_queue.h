@@ -56,7 +56,7 @@ namespace my
 			}
 			template<class InputIt>												// (9)
 			priority_queue( InputIt first, InputIt last,
-            const Compare& compare, const Container& cont)
+            const Container& cont, const Compare& compare)
 			:c(cont), comp(compare)
 			{
 				c.insert(c.end(), first, last);
@@ -64,7 +64,7 @@ namespace my
 			}
 			template<class InputIt>												// (10)
 			priority_queue( InputIt first, InputIt last,
-			const Compare& compare, Container&& cont)
+			Container&& cont, const Compare& compare)
 			:c(std::move(cont)), comp(compare)
 			{
 				c.insert(c.end(), first, last);
@@ -135,15 +135,16 @@ namespace my
 			}
 	};
 
-/*
-	template< class InputIt>
-			priority_queue( InputIt first, InputIt last,
-                const Compare& compare) -> priority_queue<typename std::iterator_traits<InputIt>::value_type,
-	std::vector<typename std::iterator_traits<InputIt>::value_type>, 
-	std::less<typename std::iterator_traits<InputIt>::value_type> >;
-
-} */
-
+	template< typename InputIt, typename Cont = std::vector<typename std::iterator_traits<InputIt>::value_type>, typename Comp = std::less<typename std::iterator_traits<InputIt>::value_type>>
+	priority_queue( InputIt, InputIt,
+                const Comp& = Comp()) -> priority_queue<typename std::iterator_traits<InputIt>::value_type,
+	Cont, Comp>;
+	template<typename InputIt, typename Cont = std::vector<typename std::iterator_traits<InputIt>::value_type>, typename Comp = std::less<typename std::iterator_traits<InputIt>::value_type>>											// (9)
+	priority_queue( InputIt , InputIt , const Cont& , const Comp&) -> priority_queue<typename std::iterator_traits<InputIt>::value_type,
+	Cont, Comp>;
+	template<typename InputIt, typename Cont = std::vector<typename std::iterator_traits<InputIt>::value_type>, typename Comp = std::less<typename std::iterator_traits<InputIt>::value_type>>											// (9)
+	priority_queue( InputIt , InputIt ,const Cont&& , const Comp&) -> priority_queue<typename std::iterator_traits<InputIt>::value_type, Comp, Cont>;
+}
 
 
 
