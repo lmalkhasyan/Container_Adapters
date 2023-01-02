@@ -1,5 +1,5 @@
-#ifndef PRIORITY_QUEUE
-#define PRIORITY_QUEUE
+#ifndef PRIORITY_QUEUE_H
+#define PRIORITY_QUEUE_H
 
 #include <vector>
 #include <algorithm>
@@ -47,7 +47,7 @@ namespace my
 			priority_queue(priority_queue&& other)								// (6)
 			:comp(std::move(other.comp)), c(std::move(other.c)) { }
 			
-			template< class InputIt >					// DONT WORK!
+			template< class InputIt >					// (7)
 			priority_queue( InputIt first, InputIt last,
                 const Compare& compare = Compare() )
 			:comp(compare), c(first, last)
